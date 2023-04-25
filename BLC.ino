@@ -28,8 +28,8 @@ void setup() {
 }
 
 void loop() {
+  
 //Lumieres avant : position, croisement, route, brouillard, clignotant, warnings, diurnes
-
 //Lumieres arrières : frein, recul, clignotant, warnings, phares, antibrouillard
 
   while(Serial1.available()){
@@ -37,61 +37,6 @@ void loop() {
 
     char type  = inChar >> 2;
     char value = inChar & B00000011;
-
-    /*
-    char type;
-    char value;
-    
-    if(inChar == 'a'){
-      type = 1;
-      value = 0;
-    }
-
-    if(inChar == 'b'){
-      type = 1;      
-      value = 1;
-    }
-
-    if(inChar == 'c'){
-      type = 2;
-      value = 0;
-    }
-
-    if(inChar == 'd'){
-      type = 2;
-      value = 1;
-    }
-
-    if(inChar == 'e'){
-      type = 3;
-      value = 0;
-    }
-
-    if(inChar == 'f'){
-      type = 3;
-      value = 1;
-    }
-
-    if(inChar == 'g'){
-      type = 3;
-      value = 2;
-    }
-
-    if(inChar == 'h'){
-      type = 3;
-      value = 3;
-    }
-
-    if(inChar == 'i'){
-      type = 4;
-      value = 0;
-    }
-
-    if(inChar == 'j'){
-      type = 4;
-      value = 1;
-    }
-    */
 
     switch(type){
       case 1: //freins
