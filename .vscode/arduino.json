@@ -1,0 +1,5 @@
+{
+    "sketch": "BLC.ino",
+    "configuration": "usb=serial,speed=600,opt=o2std,keys=fr-fr",
+    "board": "teensy:avr:teensy41"
+}

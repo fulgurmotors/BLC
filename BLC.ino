@@ -28,7 +28,6 @@ void setup() {
 }
 
 void loop() {
-  
 //Lumieres avant : position, croisement, route, brouillard, clignotant, warnings, diurnes
 //Lumieres arrières : frein, recul, clignotant, warnings, phares, antibrouillard
 
