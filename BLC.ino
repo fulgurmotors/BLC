@@ -86,6 +86,9 @@ void loop() {
      case 3: //warnings
        warnings();
        break;
+      default:
+        clignooff();
+        break;
   }
 
   //arret();
@@ -113,7 +116,7 @@ void clignodroite(){
 
     if(indexClignotant == taille){
       indexClignotant = 0;
-      for(int i = NUM_LEDS - taille - 1;i < taille;i++){
+      for(int i = 0;i < taille;i++){
         leds[i] = defaultState[i];
       } 
     }
@@ -126,14 +129,19 @@ void clignodroite(){
 void clignogauche(){
   if(lastTimeCligno + DELAYCLI < millis()){
 
-    int led = taille * 3 + indexClignotant;
-    
+    int led = NUM_LEDS - 1 - taille + indexClignotant;
     leds[led].setColorCode(orange);
-    leds[(led - 2)%taille] = defaultState[(led - 1)%taille];
-    FastLED.show();
 
     indexClignotant++;
-    indexClignotant = indexClignotant % taille;
+
+    if(indexClignotant == taille){
+      indexClignotant = 0;
+      for(int i = NUM_LEDS - taille - 1;i < NUM_LEDS;i++){
+        leds[i] = defaultState[i];
+      } 
+    }
+
+    FastLED.show();
     lastTimeCligno = millis();
   }
 }
@@ -142,19 +150,24 @@ void warnings(){
   
   if(lastTimeCligno + DELAYCLI < millis()){
   
-    int led = taille - indexClignotant - 1;
-    
+    int led = NUM_LEDS - 1 - taille + indexClignotant;
     leds[led].setColorCode(orange);
-    leds[(led - 2)%taille] = defaultState[(led - 2)%taille];
-
-    led = taille * 3 + indexClignotant;
-    
+    led = taille - indexClignotant - 1;
     leds[led].setColorCode(orange);
-    leds[(led - 2)%taille] = defaultState[(led - 2)%taille];
-    FastLED.show();
 
     indexClignotant++;
-    indexClignotant = indexClignotant % taille;
+
+    if(indexClignotant == taille){
+      indexClignotant = 0;
+      for(int i = NUM_LEDS - taille - 1;i < NUM_LEDS;i++){
+        leds[i] = defaultState[i];
+      }
+      for(int i = 0;i < taille;i++){
+        leds[i] = defaultState[i];
+      }
+    }
+
+    FastLED.show();
     lastTimeCligno = millis();
   }
 }
