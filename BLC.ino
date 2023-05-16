@@ -1,18 +1,16 @@
 #include "lights.h"
+#include "battery.h"
 
 bool frein = 0;
 
-int taille = NUM_LEDS / 4;
 int indexClignotant = 0;
 
 unsigned long lastTimeCligno = 0;
-
 
 CRGB * defaultState;
 CRGB * leds;
 
 int brakes, reverse, DRL = 1, headlights, turnSignals, foglights;
-
 
 void setup() {
 
@@ -30,6 +28,7 @@ void loop() {
 //Lumieres avant : position, croisement, route, brouillard, clignotant, warnings, diurnes
 //Lumieres arrières : frein, recul, clignotant, warnings, phares, antibrouillard
 
+//Read serial input from the car
   while(Serial1.available()){
     char inChar = Serial1.read();
 
@@ -71,7 +70,6 @@ void loop() {
   recul(reverse, leds, defaultState);
   phares(headlights, leds, defaultState);
 
-
   switch(turnSignals){
     case 0: //clignotant droit
        clignooff(leds, defaultState, &indexClignotant);
@@ -90,5 +88,6 @@ void loop() {
         break;
   }
 
-  //arret();
+  float courant = readCurrent(CURRENT_SENSOR_PIN);
+  Serial1.print(courant);
 }

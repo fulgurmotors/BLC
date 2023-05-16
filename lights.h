@@ -1,9 +1,12 @@
+#ifndef LIGHTS_H
+#define LIGHTS_H
+
 #include <FastLED.h>
 
-#define TAILLE 20
 #define DELAYCLI 100
 #define STARTDELAY 50
 #define NUM_LEDS 20
+#define TAILLE_CLIGNO 0.25
 #define PIN_LED 4
 
 
@@ -24,3 +27,5 @@ void clignodroite(CRGB* leds, CRGB* defaultState, int * indexClignotant, unsigne
 void clignogauche(CRGB* leds, CRGB* defaultState, int * indexClignotant, unsigned long * lastTimeCligno);
 void warnings(CRGB* leds, CRGB* defaultState, int * indexClignotant, unsigned long * lastTimeCligno);
 void arret(CRGB * leds);
+
+#endif

@@ -2,10 +2,10 @@
 
 void clignooff(CRGB* leds, CRGB* defaultState, int * indexClignotant){
 
-  for (int i = TAILLE - 1; i >= 0; i--){
+  for (int i = NUM_LEDS * TAILLE_CLIGNO - 1; i >= 0; i--){
     leds[i] = defaultState[i];
   }
-  for (int i = NUM_LEDS - TAILLE ; i < NUM_LEDS; i++){
+  for (int i = NUM_LEDS * (1 - TAILLE_CLIGNO) ; i < NUM_LEDS; i++){
     leds[i] = defaultState[i];
   }
     FastLED.show();
@@ -15,14 +15,14 @@ void clignooff(CRGB* leds, CRGB* defaultState, int * indexClignotant){
 void clignodroite(CRGB* leds, CRGB* defaultState, int * indexClignotant, unsigned long * lastTimeCligno){
   if(*lastTimeCligno + DELAYCLI < millis()){
 
-    int led = TAILLE - *indexClignotant - 1;
+    int led = NUM_LEDS * TAILLE_CLIGNO - *indexClignotant - 1;
     leds[led].setColorCode(orange);
 
     indexClignotant++;
 
-    if(*indexClignotant == TAILLE){
+    if(*indexClignotant == NUM_LEDS * TAILLE_CLIGNO){
       *indexClignotant = 0;
-      for(int i = 0;i < TAILLE;i++){
+      for(int i = 0;i < NUM_LEDS * TAILLE_CLIGNO;i++){
         leds[i] = defaultState[i];
       } 
     }
@@ -35,14 +35,14 @@ void clignodroite(CRGB* leds, CRGB* defaultState, int * indexClignotant, unsigne
 void clignogauche(CRGB* leds, CRGB* defaultState, int * indexClignotant, unsigned long * lastTimeCligno){
   if(*lastTimeCligno + DELAYCLI < millis()){
 
-    int led = NUM_LEDS - 1 - TAILLE + *indexClignotant;
+    int led = NUM_LEDS * (1 - TAILLE_CLIGNO) - 1 + *indexClignotant;
     leds[led].setColorCode(orange);
 
     *indexClignotant++;
 
-    if(*indexClignotant == TAILLE){
+    if(*indexClignotant == NUM_LEDS * TAILLE_CLIGNO){
       *indexClignotant = 0;
-      for(int i = NUM_LEDS - TAILLE - 1;i < NUM_LEDS;i++){
+      for(int i = NUM_LEDS * (1 - TAILLE_CLIGNO) - 1;i < NUM_LEDS;i++){
         leds[i] = defaultState[i];
       } 
     }
@@ -56,19 +56,19 @@ void warnings(CRGB* leds, CRGB* defaultState, int * indexClignotant, unsigned lo
   
   if(*lastTimeCligno + DELAYCLI < millis()){
   
-    int led = NUM_LEDS - 1 - TAILLE + *indexClignotant;
+    int led = NUM_LEDS * (1 - TAILLE_CLIGNO) - 1 + *indexClignotant;
     leds[led].setColorCode(orange);
-    led = TAILLE - *indexClignotant - 1;
+    led = NUM_LEDS * TAILLE_CLIGNO - *indexClignotant - 1;
     leds[led].setColorCode(orange);
 
     *indexClignotant++;
 
-    if(*indexClignotant == TAILLE){
+    if(*indexClignotant == NUM_LEDS * TAILLE_CLIGNO){
       *indexClignotant = 0;
-      for(int i = NUM_LEDS - TAILLE - 1;i < NUM_LEDS;i++){
+      for(int i = NUM_LEDS * (1 - TAILLE_CLIGNO) - 1;i < NUM_LEDS;i++){
         leds[i] = defaultState[i];
       }
-      for(int i = 0;i < TAILLE;i++){
+      for(int i = 0;i < NUM_LEDS * TAILLE_CLIGNO;i++){
         leds[i] = defaultState[i];
       }
     }
@@ -119,7 +119,7 @@ void demarrage(CRGB* leds, CRGB* defaultState){
 }
 
 void freinage(bool value, CRGB* leds, CRGB* defaultState){
-  for (int i = TAILLE + 1; i < NUM_LEDS - TAILLE - 1; i++){
+  for (int i = NUM_LEDS * TAILLE_CLIGNO + 1; i < NUM_LEDS * (1 - TAILLE_CLIGNO) - 1; i++){
     if(value)leds[i].setColorCode(brightRed);
     else leds[i] = defaultState[i];
   }
@@ -128,12 +128,12 @@ void freinage(bool value, CRGB* leds, CRGB* defaultState){
 
 void recul(bool value, CRGB* leds, CRGB* defaultState){
   if(value){
-    leds[TAILLE].setColorCode(reverseWhite);
-    leds[NUM_LEDS - TAILLE - 1].setColorCode(reverseWhite);    
+    leds[(int)(NUM_LEDS * TAILLE_CLIGNO)].setColorCode(reverseWhite);
+    leds[(int)(NUM_LEDS * (1 - TAILLE_CLIGNO) - 1)].setColorCode(reverseWhite);    
   }
   else{
-    leds[TAILLE] = defaultState[TAILLE];
-    leds[NUM_LEDS - TAILLE - 1] = defaultState[NUM_LEDS - TAILLE - 1];       
+    leds[(int)(NUM_LEDS * TAILLE_CLIGNO)] = defaultState[(int)(NUM_LEDS * TAILLE_CLIGNO)];
+    leds[(int)(NUM_LEDS * (1 - TAILLE_CLIGNO) - 1)] = defaultState[(int)(NUM_LEDS  * (1 - TAILLE_CLIGNO) - 1)];       
   }
   FastLED.show();
 }
